@@ -283,6 +283,35 @@ code(for: "Badges", active: false) {
     PlaygroundPage.current.setLiveView(ContentView())
 }
 
+code(for: "Sheet View Modal", active: false) {
+    struct SheetView: View {
+        @Environment(\.dismiss) var dismiss
+
+        var body: some View {
+            Button("Press to dismiss") {
+                dismiss()
+            }
+            .font(.title)
+            .padding()
+            .background(Color.black)
+        }
+    }
+
+    struct ContentView: View {
+        @State private var showingSheet = false
+
+        var body: some View {
+            Button("Show Sheet") {
+                showingSheet.toggle()
+            }
+            .sheet(isPresented: $showingSheet) {
+                SheetView()
+            }
+        }
+    }
+    PlaygroundPage.current.setLiveView(ContentView())
+}
+
 code(for: "Zstack examples", active: false) {
     
     struct ContentView: View {
@@ -317,49 +346,36 @@ code(for: "Zstack examples", active: false) {
     PlaygroundPage.current.setLiveView(ContentView())
 }
 
-code(for: "Slideout Menu", active: true) {
-    struct MenuContent: View {
-        var body: some View {
-            List {
-                Text("My Profile").onTapGesture {
-                    print("My Profile")
-                }
-                Text("Posts").onTapGesture {
-                    print("Posts")
-                }
-                Text("Logout").onTapGesture {
-                    print("Logout")
-                }
-            }
-        }
-    }
+code(for: "Navigation Views with multiple lists", active: false) {
     
-    struct SideMenu: View {
-        let width: CGFloat
-        let isOpen: Bool
-        let menuClose: () -> Void
-        
+    struct SomeOtherView: View {
         var body: some View {
-            NavigationView {
-                ZStack {
-                    GeometryReader { _ in
-                        EmptyView()
-                    }
-                    .background(Color.gray.opacity(0.3))
-                    .opacity(self.isOpen ? 1.0 : 0.0)
-                    .animation(Animation.easeIn.delay(0.25))
-                    .onTapGesture {
-                        self.menuClose()
-                    }
-                    
-                    HStack {
-                        MenuContent()
-                            .frame(width: self.width)
-                            .background(Color.red)
-                            .offset(x: self.isOpen ? 0 : -self.width)
-                            .animation(.default)
-                        
-                        Spacer()
+            ZStack {
+//                GeometryReader { _ in
+//                    EmptyView()
+//                }
+//                .background(Color.gray.opacity(0.3))
+//                .opacity(1.0)//self.isOpen ? 1.0 : 0.0)
+//                .animation(.easeIn(duration: 0.25))
+//                .onTapGesture {
+//                    print("tapped")
+//                }
+//
+                HStack {
+                    GeometryReader { geometry in
+
+                    List {
+                        NavigationLink(destination: Text("here 3").onAppear(perform: {
+                            print("close menu")
+                        })
+                        ) {
+                            Text("Testing 3")
+                        }
+                        NavigationLink(destination: Text("here 4")) {
+                            Text("Testing 4")
+                        }
+                    }.offset(x: 100, y: 0)
+                            
                     }
                 }
             }
@@ -367,29 +383,35 @@ code(for: "Slideout Menu", active: true) {
     }
     
     struct ContentView: View {
-        @State var menuOpen: Bool = false
-        
         var body: some View {
-            ZStack {
-                if !self.menuOpen {
-                    Button(action: {
-                        self.openMenu()
-                    }, label: {
-                        Text("Open")
-                    })
+            NavigationView {
+                ZStack {
+                    List {
+                        NavigationLink(destination: Text("here 1")) {
+                            Text("Testing 1")
+                        }
+                        NavigationLink(destination: Text("here 2")) {
+                            Text("Testing 2")
+                        }
+                    }
+                    
+                    SomeOtherView()
+                        .offset(x: 10, y: 0)
                 }
-                
-                SideMenu(width: 270,
-                         isOpen: self.menuOpen,
-                         menuClose: self.openMenu)
+                .navigationBarTitle(Text("SObjects"), displayMode: .inline)
+                .toolbar(content: {
+                    ToolbarItemGroup(placement: .navigationBarLeading) {
+                        Button("Open") {
+//                            self.openMenu()
+                        }
+                    }
+                })
+
             }
-        }
-        
-        func openMenu() {
-            self.menuOpen.toggle()
         }
     }
     
+    //    let contentView = getSlideoutMenu(menuContent: AnyView(MenuContent()))
     PlaygroundPage.current.setLiveView(ContentView())
 }
 
@@ -412,3 +434,4 @@ code(for: "Animations", active: false) {
     
     PlaygroundPage.current.setLiveView(ContentView())
 }
+

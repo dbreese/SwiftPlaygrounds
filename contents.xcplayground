@@ -6,5 +6,7 @@
         <page name='JSON'/>
         <page name='SwiftUI'/>
         <page name='Classes And Structs'/>
+        <page name='SliderMenu'/>
+        <page name='State'/>
     </pages>
 </playground>
