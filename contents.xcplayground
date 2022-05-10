@@ -8,5 +8,6 @@
         <page name='Classes And Structs'/>
         <page name='SliderMenu'/>
         <page name='State'/>
+        <page name='Tuples'/>
     </pages>
 </playground>
