@@ -61,7 +61,7 @@ code(for: "Attempt to decode JSON that doesnt match struct", active: false) {
     print("Employee: \(employee)")
 }
 
-code(for: "Sample creating a JSON Object/dictionary", active: true) {
+code(for: "Sample creating a JSON Object/dictionary", active: false) {
     let jsonString = """
     {
       "name" : "Dustin",

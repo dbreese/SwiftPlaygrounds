@@ -142,15 +142,19 @@ code(for: "Passthrough publisher with complex json", active: false) {
     
     passthroughSubject.send("""
         {"records" : [
-                {"name":"Harper", "age": 10},
-                {"name":"Paislee", "age": 10},
                 {"name":"Ethan", "age": 19},
                 {"name":"Ben", "age": 16},
             ] }
-""")
+        """)
+    passthroughSubject.send("""
+        {"records" : [
+                {"name":"Harper", "age": 10},
+                {"name":"Paislee", "age": 10},
+            ] }
+        """)
 }
 
-code(for: "Example using Just publisher", active: true) {
+code(for: "Example using Just publisher", active: false) {
     // Take a string, convert to array of chars, filter all non-vowels
     let publisher = Just("this is a test")
     publisher.map { s in
@@ -172,4 +176,3 @@ code(for: "Example using Just publisher", active: true) {
 }
 
 // TODO: zip, reduce, collect, dropJust
-

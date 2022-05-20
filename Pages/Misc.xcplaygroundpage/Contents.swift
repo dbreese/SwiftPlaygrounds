@@ -1,6 +1,16 @@
 import UIKit
 import PlaygroundSupport
 
+code(for: "Type alias/typedef", active: true) {
+    typealias SampleFunction = (String) -> (String)
+    
+    let f: SampleFunction = { s in
+        return s.capitalized
+    }
+    
+    print(f("dustin breese was here"))
+}
+
 code(for: "Result type", active: false) {
     enum ValidationError: Error {
         case tooBig

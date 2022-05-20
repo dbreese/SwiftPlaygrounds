@@ -286,7 +286,7 @@ code(for: "Badges", active: false) {
 code(for: "Sheet View Modal", active: false) {
     struct SheetView: View {
         @Environment(\.dismiss) var dismiss
-
+        
         var body: some View {
             Button("Press to dismiss") {
                 dismiss()
@@ -296,10 +296,10 @@ code(for: "Sheet View Modal", active: false) {
             .background(Color.black)
         }
     }
-
+    
     struct ContentView: View {
         @State private var showingSheet = false
-
+        
         var body: some View {
             Button("Show Sheet") {
                 showingSheet.toggle()
@@ -351,31 +351,31 @@ code(for: "Navigation Views with multiple lists", active: false) {
     struct SomeOtherView: View {
         var body: some View {
             ZStack {
-//                GeometryReader { _ in
-//                    EmptyView()
-//                }
-//                .background(Color.gray.opacity(0.3))
-//                .opacity(1.0)//self.isOpen ? 1.0 : 0.0)
-//                .animation(.easeIn(duration: 0.25))
-//                .onTapGesture {
-//                    print("tapped")
-//                }
-//
+                //                GeometryReader { _ in
+                //                    EmptyView()
+                //                }
+                //                .background(Color.gray.opacity(0.3))
+                //                .opacity(1.0)//self.isOpen ? 1.0 : 0.0)
+                //                .animation(.easeIn(duration: 0.25))
+                //                .onTapGesture {
+                //                    print("tapped")
+                //                }
+                //
                 HStack {
                     GeometryReader { geometry in
-
-                    List {
-                        NavigationLink(destination: Text("here 3").onAppear(perform: {
-                            print("close menu")
-                        })
-                        ) {
-                            Text("Testing 3")
-                        }
-                        NavigationLink(destination: Text("here 4")) {
-                            Text("Testing 4")
-                        }
-                    }.offset(x: 100, y: 0)
-                            
+                        
+                        List {
+                            NavigationLink(destination: Text("here 3").onAppear(perform: {
+                                print("close menu")
+                            })
+                            ) {
+                                Text("Testing 3")
+                            }
+                            NavigationLink(destination: Text("here 4")) {
+                                Text("Testing 4")
+                            }
+                        }.offset(x: 100, y: 0)
+                        
                     }
                 }
             }
@@ -402,11 +402,11 @@ code(for: "Navigation Views with multiple lists", active: false) {
                 .toolbar(content: {
                     ToolbarItemGroup(placement: .navigationBarLeading) {
                         Button("Open") {
-//                            self.openMenu()
+                            //                            self.openMenu()
                         }
                     }
                 })
-
+                
             }
         }
     }
@@ -435,3 +435,182 @@ code(for: "Animations", active: false) {
     PlaygroundPage.current.setLiveView(ContentView())
 }
 
+
+code(for: "Offset background", active: false) {
+    
+    struct MenuContent: View {
+        
+        var body: some View {
+            HStack {
+                Text("one")
+                Text("two")
+                Spacer()
+            }
+        }
+    }
+    
+    //    struct ContentView: View {
+    //        @State private var isOpen = false
+    //
+    //        var body: some View {
+    //
+    //            ZStack {
+    //                // shaded background with tap handler for user to tap to dismiss
+    //                GeometryReader { _ in
+    //                    EmptyView()
+    //                }
+    //                .background(Color.gray.opacity(0.3))
+    //                .opacity($isOpen.wrappedValue ? 1.0 : 0.0)
+    //                .animation(.easeIn(duration: 0.25))
+    //                .onTapGesture {
+    //                    isOpen = false
+    //                }
+    //
+    //                // Actual menu, hidden off screen when not "open" and animated onto the screen when opened
+    //                HStack {
+    //                    GeometryReader { geometry in
+    //                        MenuContent()
+    //                            .frame(width: geometry.size.width * 0.75) // 75% of the width
+    //                            // if we are open, then offset is % from left, otherwise it is off screen
+    //                            .offset(x: self.isOpen ? geometry.size.width * 0.30 : geometry.size.width)
+    //                            .animation(.default)
+    //                            .background(Color.red)
+    //                    }
+    //
+    //                    Spacer()
+    //                }
+    //
+    //            }
+    //            .ignoresSafeArea(.all, edges: .vertical)
+    //        }
+    //    }
+    //    PlaygroundPage.current.setLiveView(ContentView())
+}
+
+code(for: "Full Screen Modal View", active: false) {
+    struct FullScreenModalView: View {
+        @Environment(\.presentationMode) var presentationMode
+        
+        var body: some View {
+            ZStack {
+                Color.primary.edgesIgnoringSafeArea(.all)
+                Button("Dismiss Modal") {
+                    presentationMode.wrappedValue.dismiss()
+                }
+            }
+        }
+    }
+    
+    struct ContentView: View {
+        @State private var isPresented = false
+        
+        var body: some View {
+            VStack {
+                Button("Present!") {
+                    isPresented.toggle()
+                }
+                .fullScreenCover(isPresented: $isPresented, content: FullScreenModalView.init)
+                
+                Spacer()
+                
+                Text("Testing")
+            }
+            .border(.red, width: 1)
+            .frame(width: 200, height: 500, alignment: .center)
+        }
+    }
+    
+    PlaygroundPage.current.setLiveView(ContentView())
+    
+}
+
+code(for: "Using Offsets", active: false) {
+    struct FullScreenModalView: View {
+        @Environment(\.presentationMode) var presentationMode
+        
+        var body: some View {
+            ZStack {
+                Color.primary.edgesIgnoringSafeArea(.all)
+                Button("Dismiss Modal") {
+                    presentationMode.wrappedValue.dismiss()
+                }
+            }
+        }
+    }
+    
+    struct ContentView: View {
+        @State private var isPresented = false
+        
+        var body: some View {
+            VStack {
+                Button("Present!") {
+                    isPresented.toggle()
+                }
+                .fullScreenCover(isPresented: $isPresented, content: FullScreenModalView.init)
+                
+                Spacer()
+                
+                Text("Testing")
+            }
+            .border(.red, width: 1)
+            .frame(width: 200, height: 500, alignment: .center)
+        }
+    }
+    
+    PlaygroundPage.current.setLiveView(ContentView())
+    
+}
+
+
+code(for: "View Modifiers", active: false) {
+    // see support code for the modifier
+    
+    struct ContentView: View {
+        @State private var isPresented = false
+        
+        var body: some View {
+            VStack {
+                Image(systemName: "bus")
+                    .resizable()
+                    .frame(width:50, height:50)
+                Text("Downtown Bus")
+                    .borderedCaption()
+            }
+            .border(.red, width: 1)
+            .frame(width: 200, height: 500, alignment: .center)
+        }
+    }
+    
+    PlaygroundPage.current.setLiveView(ContentView())
+    
+}
+
+code(for: "List Multi-select with editMode", active: true) {
+    // trick is that the List must be in Edit mode. There are two ways to do this:
+    // setting .editMode environment variable to a Binding.constant(.active) or
+    // Adding an EditButton.
+    struct ContentView: View {
+        @State var selectedItems: Set<String> = []
+        
+        let items = ["a", "b", "c"]
+        
+        var body: some View {
+            NavigationView {
+                VStack {
+                    List(selection: $selectedItems) {
+                        ForEach(items, id: \.id) { item in
+                            Text("\(item)")
+                        }
+                    }
+                    //                    .environment(\.editMode, .constant(.active))
+                    .environment(\.textCase, .uppercase)
+                }
+                .toolbar {
+                    EditButton()
+                }
+            }
+        }
+    }
+    
+    PlaygroundPage.current.setLiveView(ContentView())
+}
